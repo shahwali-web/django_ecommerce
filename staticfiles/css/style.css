@@ -1,0 +1,41 @@
+body {
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+.cart-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 0;
+}
+
+.card {
+    border: none;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    height: 200px; /* Consistent image height */
+    object-fit: contain; /* Ensure images are fully visible */
+    padding: 10px;
+}
+
+.card-body {
+    text-align: center;
+    padding: 15px;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #343a40;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 50px;
+}
