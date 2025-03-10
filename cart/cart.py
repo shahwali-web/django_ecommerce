@@ -1,4 +1,6 @@
 from store.models import Product
+
+
 class Cart:
     def __init__(self, request):
         self.session = request.session
@@ -56,6 +58,20 @@ class Cart:
 
         self.session.modified = True
 
+    def cart_total(self):
+        product_ids = self.cart.keys()
+        products = Product.objects.filter(id__in=product_ids)
+        quantities = self.cart
+        total = 0
+        for key, value in quantities.items():
+            key = int(key)
+            for product in products:
+                if product.id == key:
+                    if product.is_sale:
+                        total = total + (product.sale_price * int(value))
+
+                    else:
+                        total = total + (product.price * int(value))
 
 
-
+        return total

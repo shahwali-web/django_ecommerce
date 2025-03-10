@@ -24,7 +24,12 @@
                 <div class="card">
                     <img class="card-img-top" src="{{ product.image.url }}" alt="Product Image">
                     <div class="card-body">
-                        <p class="card-text">{{ product.name }} - ${{ product.price }}</p>
+                        <p class="card-text">Name: {{ product.name }} </p>
+
+                           <p class="card-text">{% if product.is_sale %}Sale Price: ${{ product.sale_price}} - <strike>Price ${{ product.price }}</strike></p>
+                               {% else %}
+                                Price ${{ product.price }}
+                                            {% endif %}
 
 
 
@@ -62,7 +67,10 @@
                 </div>
 
             </div>
+
             {% endfor %}
+             <h1>Total: {{ total }}</h1>
+
         {% else %}
         <h1>Nothing in your Cart</h1>
         {% endif %}
