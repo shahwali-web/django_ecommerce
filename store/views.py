@@ -1,9 +1,31 @@
 from django.shortcuts import render, redirect
 from .models import Product, Category
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import SignUpForm
+from .forms import SignUpForm, UserFormUpdate
 
+def update_user(request):
+    if request.user.is_authenticated:
+        current_user = User.objects.get(id=request.user.id)
+        user_form = UserFormUpdate(request.POST or None, instance=current_user)
+
+        if user_form.is_valid():
+            user_form.save()
+            login(request, current_user)
+            messages.success(request,"User has been Updated!!!")
+            return redirect('update_user')
+        return render(request, 'update_user.html', {"user_form":user_form})
+    else:
+        messages.success(request, "You must be login to access that page! ")
+        return redirect('home')
+
+def category_summary(request):
+    categories = Category.objects.all()
+    context = {
+        "categories": categories,
+    }
+    return render(request,'category_summary.html', context=context)
 
 def category(request, foo):
     foo = foo.replace('-',' ')
