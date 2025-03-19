@@ -1,20 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-
-            <p class="lead fw-normal text-white-50 mb-0"><h2>About </h2>
-            <p style="text-align: justify;">
-Welcome to my eCommerce website! I'm Shah Wali, a passionate Django developer with a strong background in Python, web development, and problem-solving.
-
-I specialize in building efficient and scalable web applications, and this project is a reflection of my skills in Django, MySQL, HTML, CSS, and JavaScript. My goal is to create a seamless online shopping experience with a user-friendly interface, secure transactions, and smooth navigation.
-
-This eCommerce platform is designed to help businesses and customers connect easily. Whether you're here to browse products or gain insights into Django development, I hope you find this project useful!
-
-Want to collaborate or provide feedback?</p></p>
+    <!-- Header -->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">About</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Learn more about this project</p>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
+
+    <!-- About Section -->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-4">
+                            <h2 class="fw-bolder text-center">Welcome to My eCommerce Website!</h2>
+                            <p class="text-muted text-center">By Shah Wali, Django Developer</p>
+                            <p class="text-justify">
+                                I'm Shah Wali, a passionate Django developer with expertise in Python, web development, and problem-solving.
+                                This project is a showcase of my skills in Python, Django, SQLITE, HTML, CSS, and JavaScript.
+                            </p>
+                            <p class="text-justify">
+                                My goal is to create a seamless online shopping experience with a user-friendly interface, secure transactions, and smooth navigation.
+                            </p>
+                            <p class="text-justify">
+                                This eCommerce platform helps businesses and customers connect effortlessly.
+                                Whether you're here to explore products or gain insights into Django development, I hope you find this project valuable!
+                            </p>
+                            <p class="text-center fw-bolder">Want to collaborate or provide feedback?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -3,7 +3,66 @@ from .models import Product, Category, Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.db.models import Q
 from .forms import SignUpForm, UserFormUpdate, ChangePasswordForm, UserInfoForm
+from decimal import Decimal, InvalidOperation
+
+
+
+
+
+def search(request):
+    if request.method == 'POST':
+        searched = request.POST.get('searched').strip()
+        try:
+            searched = int(searched)
+            searched = Product.objects.filter(
+                Q(price__exact=searched) |
+                Q(sale_price__exact=searched)
+            )
+
+        except ValueError:
+
+            if searched:
+                searched = Product.objects.filter(
+                    Q(name__icontains=searched) |
+                    Q(description__icontains=searched)
+                )
+
+        # if search product does not exist then print this message
+        if not searched:
+            messages.error(request, "No matching products found.")
+
+        context = {"searched": searched}
+        return render(request, 'search.html', context=context)
+    else:
+        return render(request, 'search.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def update_info(request):
     if request.user.is_authenticated:
