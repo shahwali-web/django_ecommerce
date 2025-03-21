@@ -1,3 +1,5 @@
+import json
+from cart.cart import Cart
 from django.shortcuts import render, redirect
 from .models import Product, Category, Profile
 from django.contrib.auth import authenticate, login, logout
@@ -37,32 +39,6 @@ def search(request):
         return render(request, 'search.html', context=context)
     else:
         return render(request, 'search.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def update_info(request):
     if request.user.is_authenticated:
@@ -119,7 +95,7 @@ def category_summary(request):
     context = {
         "categories": categories,
     }
-    return render(request,'category_summary.html', context=context)
+    return render(request, 'category_summary.html', context=context)
 
 def category(request, foo):
     foo = foo.replace('-',' ')
@@ -157,6 +133,25 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            # which data save in session now save to database after login user
+            current_user = Profile.objects.get(user__id=request.user.id)
+            saved_cart = current_user.logout_car
+            if saved_cart:
+                converted_cart = json.loads(saved_cart)
+                cart = Cart(request)
+                for key, value in converted_cart.items():
+                    cart.db_add(product=key, quantity=value)
+
+
+
+
+
+
+
+
+
+
+
             messages.success(request,"You have been login! ")
             return redirect('home')
         else:

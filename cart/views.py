@@ -50,4 +50,3 @@ def cart_delete(request):
 
         cart.delete(product=product_id)
         return JsonResponse({'qty': product_id})
-
