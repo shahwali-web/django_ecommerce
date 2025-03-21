@@ -1,9 +1,10 @@
-from store.models import Product
+from store.models import Product, Profile
 
 
 class Cart:
     def __init__(self, request):
         self.session = request.session
+        self.request = request
 
         # get Current Session Key
         cart = self.session.get('session_key')
@@ -13,6 +14,25 @@ class Cart:
 
         # now Cart is available in every page
         self.cart = cart
+
+    def db_add(self, product, quantity):
+        product_id = str(product)
+        product_qty = str(quantity)
+
+        if product_id in self.cart:
+            pass
+        else:
+            self.cart[product_id] = int(product_qty)
+
+        self.session.modified = True
+
+        # deal login user
+        if self.request.user.is_authenticated:
+            # GET CURRENT USER PROFILE
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            current_user.update(logout_car=carty)
 
     def add(self, product, quantity):
         product_id = str(product.id)
@@ -24,6 +44,14 @@ class Cart:
             self.cart[product_id] = int(product_qty)
 
         self.session.modified = True
+
+        # deal login user
+        if self.request.user.is_authenticated:
+            # GET CURRENT USER PROFILE
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            current_user.update(logout_car=carty)
 
     def __len__(self):
         return len(self.cart)

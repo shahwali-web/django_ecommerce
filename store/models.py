@@ -5,8 +5,6 @@ from django.db.models.signals import post_save
 from django import forms
 # Create your models here.
 
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_modified = models.DateTimeField(User, auto_now=True)
@@ -16,6 +14,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=200, blank=True)
     zipcode = models.CharField(max_length=200, blank=True)
     country = models.CharField(max_length=200, blank=True)
+    logout_car = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
