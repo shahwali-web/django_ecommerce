@@ -19,20 +19,18 @@ class Cart:
         product_id = str(product)
         product_qty = str(quantity)
 
-        if product_id in self.cart:
-            pass
-        else:
+        if product_id not in self.cart:
             self.cart[product_id] = int(product_qty)
 
         self.session.modified = True
 
-        # deal login user
+        # deal login user session data
         if self.request.user.is_authenticated:
             # GET CURRENT USER PROFILE
             current_user = Profile.objects.filter(user__id=self.request.user.id)
-            carty = str(self.cart)
-            carty = carty.replace("\'", "\"")
-            current_user.update(logout_car=carty)
+            session_cart_to_db = str(self.cart)
+            single__to_double_quote = session_cart_to_db.replace("\'", "\"")
+            current_user.update(logout_car=single__to_double_quote)
 
     def add(self, product, quantity):
         product_id = str(product.id)
@@ -45,13 +43,13 @@ class Cart:
 
         self.session.modified = True
 
-        # deal login user
+        # deal login user session data
         if self.request.user.is_authenticated:
             # GET CURRENT USER PROFILE
             current_user = Profile.objects.filter(user__id=self.request.user.id)
-            carty = str(self.cart)
-            carty = carty.replace("\'", "\"")
-            current_user.update(logout_car=carty)
+            session_cart_to_db = str(self.cart)
+            single__to_double_quote = session_cart_to_db.replace("\'", "\"")
+            current_user.update(logout_car=single__to_double_quote)
 
     def __len__(self):
         return len(self.cart)
