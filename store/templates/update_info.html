@@ -24,6 +24,17 @@
                         <div class="mb-3">
                             {{ form.as_p }}
                         </div>
+                        <br>
+                        <br>
+                        <h3 class="text-center mb-4">Shipping Information</h3>
+                        <br>
+
+                        <div class="mb-3">
+                            {{ shipping_form.as_p }}
+                        </div>
+
+
+
 
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary w-100">Update Info</button>
@@ -35,11 +46,8 @@
         </div>
     </div>
 </div>
-   this is login user {{ request.user.id }}
-    <br>
-    <br>
-    <br>
-   this is login user {{ request.user.username }}
+
+
 
 
 {% endblock %}

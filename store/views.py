@@ -1,3 +1,4 @@
+import datetime
 import json
 from cart.cart import Cart
 from django.shortcuts import render, redirect
@@ -7,7 +8,9 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db.models import Q
 from .forms import SignUpForm, UserFormUpdate, ChangePasswordForm, UserInfoForm
-from decimal import Decimal, InvalidOperation
+# payment app
+from payment.forms import ShippingForm
+from payment.models import ShippingAddress
 
 
 
@@ -42,13 +45,30 @@ def search(request):
 
 def update_info(request):
     if request.user.is_authenticated:
+        # Current user
         current_user = Profile.objects.get(user__id=request.user.id)
+        # Current user shipping info
+        try:
+            # Current user shipping info
+            shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
+
+        except ShippingAddress.DoesNotExist:
+            # If no shipping address exists, create a new one
+            shipping_user = ShippingAddress(user=request.user)
+            shipping_user.save()
+
+        # main user form
         form = UserInfoForm(request.POST or None, instance=current_user)
-        if form.is_valid():
+
+        # user shipping form
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
+
+        if form.is_valid() or shipping_form.is_valid():
             form.save()
+            shipping_form.save()
             messages.success(request, 'Your Info is Updated')
             return redirect('home')
-        return render(request, 'update_info.html', {'form': form})
+        return render(request, 'update_info.html', {'form': form, 'shipping_form':shipping_form})
     else:
         messages.success(request, "You Must be logged in To update info!")
         return redirect('login')
