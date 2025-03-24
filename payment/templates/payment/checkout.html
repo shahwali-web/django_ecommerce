@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">CheckOut</h1>
+                <p class="lead fw-normal text-white-50 mb-0">CheckOut Your Product</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-4">
+
+
+                            <div class="card text-center">
+                              <div class="card-header">
+                                Added product
+                              </div>
+
+                              <div class="card-body">
+                                  {% for product in products %}
+                                  <h5> Name: {{ product.name }}</h5>
+
+                                      <h6>
+                                             <p class="card-text">{% if product.is_sale %}Sale Price: ${{ product.sale_price}} - <strike>Price ${{ product.price }}</strike></p>
+                                                   {% else %}
+                                                    Price ${{ product.price }}
+                                            {% endif %}
+                                      </h6>
+
+                                      <br>
+                                      <br>
+                                  {% endfor %}
+                              <h3>Total ${{ total }}</h3>
+                                  <br>
+
+                                  <a href="{% url 'cart_summary' %}" class="btn btn-secondary">Update Item</a>
+
+
+                              </div>
+
+                            </div>
+                                        <br>
+                                        <br>
+                                        <br>
+                         <div class="card text-center">
+                              <div class="card-header">
+                                Your Order
+                              </div>
+
+                              <div class="card-body">
+                                  {{ shipping_form.as_p }}
+
+
+                            <a href="{% url 'cart_summary' %}" class="btn btn-secondary">Continue to Billing</a>
+                              </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
