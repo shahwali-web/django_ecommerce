@@ -3,11 +3,27 @@ from cart.cart import Cart
 from payment.forms import ShippingForm
 from payment.models import ShippingAddress
 
-# Create your views here.
+
+def billing_info(request):
+    shipping_address = ShippingAddress.objects.filter(user=request.user).first()
+    cart = Cart(request)
+    products = cart.get_prods()
+    quantities = cart.get_quants()
+    total = cart.cart_total()
+    shipping_form = request.POST
+
+    context = {
+        'shipping_address': shipping_address,
+        "products": products,
+        "quantities": quantities,
+        "total": total,
+        'shipping_form': shipping_form,
+    }
+    return render(request, 'payment/billing_info.html', context=context)
 
 def payment_success(request):
-
     return render(request, 'payment/payment_success.html')
+
 
 def checkout(request):
     cart = Cart(request)

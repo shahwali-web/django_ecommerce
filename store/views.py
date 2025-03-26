@@ -1,4 +1,3 @@
-import datetime
 import json
 from cart.cart import Cart
 from django.shortcuts import render, redirect

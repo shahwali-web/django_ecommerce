@@ -53,14 +53,25 @@
                                         <br>
                          <div class="card text-center">
                               <div class="card-header">
-                                Your Order
+                                Shipping Info
                               </div>
 
                               <div class="card-body">
-                                  {{ shipping_form.as_p }}
+                                {% if shipping_address %}
 
+                                        <p><strong>Full Name:</strong> {{ shipping_address.shipping_full_name }}</p>
+                                        <p><strong>Phone:</strong> {{ shipping_address.shipping_phone }}</p>
+                                        <p><strong>Email:</strong> {{ shipping_address.shipping_email }}</p>
+                                        <p><strong>Address 1:</strong> {{ shipping_address.shipping_address1 }}</p>
+                                        <p><strong>Address 2:</strong> {{ shipping_address.shipping_address2 }}</p>
+                                        <p><strong>City:</strong> {{ shipping_address.shipping_city }}</p>
+                                        <p><strong>Zipcode:</strong> {{ shipping_address.shipping_zipcode }}</p>
+                                        <p><strong>Country:</strong> {{ shipping_address.shipping_country }}</p>
+                                    {% else %}
+                                        <p>No shipping address found.</p>
+                                    {% endif %}
+                                  <a href="{% url 'checkout' %}" class="btn btn-outline-secondary"> Update Info</a>
 
-                            <a href="{% url 'billing_info' %}" class="btn btn-secondary">Continue to Billing</a>
                               </div>
 
                             </div>
